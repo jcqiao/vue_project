@@ -3,7 +3,7 @@
       <div class="addPhotoContainer"></div>
       <div class="addController">
         <h3 class="addTitle">
-          上传照片-普通上传(H5)<span class="close">╳</span>
+          上传照片-普通上传(H5)<span class="close" @click="closeMask">╳</span>
         </h3>
         <div class="photoTitles">
           <span class="uploadTo">上传到</span>
@@ -62,11 +62,16 @@
 created () {
   console.log(this.visible,'-----');
 },
-watch: {
-  visible(newValue, oldValue) {
-    console.log(newValue,oldValue)
+methods: {
+  closeMask() {
+    this.$emit("update:visible",false)
   }
 },
+// watch: {
+//   visible(newValue, oldValue) {
+//     console.log(newValue,oldValue)
+//   }
+// },
   }
 </script>
 

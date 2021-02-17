@@ -14,11 +14,11 @@
         </div>
 
         <!-- 上传按钮 -->
-        <div class="showContainer">
+        <div class="showContainer" v-show="showUploadBtn">
           <div class="uploadContainer">
             <span class="fileinput-button">
               <span>上传图片</span>
-              <input class="imgFile" type="file" name="" multiple="multiple" />
+              <input class="imgFile" type="file" name="" multiple="multiple" @input="uploadPhotos"/>
             </span>
             <span class="hint">
               按住Ctrl可多选
@@ -27,18 +27,9 @@
         </div>
 
         <!-- 显示待上传图片  -->
-        <div class="loadContainer">
+        <div class="loadContainer"  v-show="showProgress">
           <div class="wantUpload">
-            <!-- <div class="uploadPhotoItem">
-              <span class="myProgress">
-                <span class="plan"></span>
-                30%
-              </span>
-              <img src="public/img/1.jpg" />
-              <span class="pictureName">
-                home
-              </span>
-            </div> -->
+            <UploadItem></UploadItem>
           </div>
           <div class="addStyle">
             <span class="fileinput-add">
@@ -56,17 +47,38 @@
 </template>
 
 <script>
+  import UploadItem from "./UploadItem"
   export default {
     name: 'Upload',
+    components: {
+      UploadItem,
+    },
     props: ["visible"],
-created () {
-  console.log(this.visible,'-----');
-},
-methods: {
-  closeMask() {
-    this.$emit("update:visible",false)
-  }
-},
+    data() {
+      return {
+        files: []
+      }
+    },
+    created () {
+      console.log(this.visible,'-----');
+    },
+    computed: {
+      showUploadBtn() {
+        return this.files.length === 0
+      },
+      showProgress(){
+        return this.files.length > 0
+      }
+    },
+    methods: {
+      closeMask() {
+        this.$emit("update:visible",false)
+      },
+      uploadPhotos(e){
+        // console.log(e.target.files) 类数组
+        this.files = Array.from(e.target.files)
+      }
+    },
 // watch: {
 //   visible(newValue, oldValue) {
 //     console.log(newValue,oldValue)

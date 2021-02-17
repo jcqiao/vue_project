@@ -30,7 +30,7 @@
         <div class="loadContainer"  v-show="showProgress">
           <div class="wantUpload">
             <template v-for="(item,index) in files">
-              <UploadItem  :key="index" :file="item"></UploadItem>
+              <UploadItem ref="uploadFiles"  :key="index" :file="item"></UploadItem>
             </template>
           </div>
           <div class="addStyle">
@@ -41,7 +41,7 @@
           </div>
           <!-- 开始上传按钮 -->
           <div class="bottomStyle">
-            <span class="uploadBtn">开始上传</span>
+            <span class="uploadBtn" @click="upload">开始上传</span>
           </div>
         </div>
       </div>
@@ -77,6 +77,11 @@
       uploadPhotos(e){
         // console.log(e.target.files) 类数组
         this.files = Array.from(e.target.files)
+      },
+      upload(){
+        this.$refs.uploadFiles.forEach(upLoadCom => {
+          upLoadCom.uploadFile()
+        });
       }
     },
 watch: {

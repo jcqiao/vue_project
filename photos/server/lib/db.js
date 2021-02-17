@@ -12,7 +12,7 @@ function query(sql,values) {
       if (err) {
         reject(`数据库查询失败：${err}`)
       }
-      console.log('db:',res)
+      // console.log('db:',res)
       resolve(res)
     })
   })

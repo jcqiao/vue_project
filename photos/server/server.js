@@ -5,6 +5,7 @@ const Router = require("koa-router");
 
 const login = require("./lib/login")
 const getPhotos = require("./lib/getPhotos")
+const uploadFiles = require("./lib/uploadFiles")
 
 const app = new Koa();
 app.use(
@@ -19,6 +20,8 @@ const router = new Router();
 router.post("/login",login);
 
 router.get("/getPhotos", getPhotos)
+
+router.post("/uploadFiles", uploadFiles)
 
 app.use(router.routes());
 app.listen(8081);

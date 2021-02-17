@@ -6,12 +6,13 @@
     </span>
     <img :src="imgSrc" />
     <span class="pictureName">
-      home
+      {{file.name }}
     </span>
   </div>
 </template>
 
 <script>
+import {uploadFilesApi} from "../api/index"
   export default {
     name:"UploadItem",
     props: ["file"],
@@ -28,6 +29,14 @@
         this.imgSrc = fileReader.result
         // console.log(this.imgSrc)
 
+      }
+    },
+    methods: {
+      uploadFile() {
+        let i =0
+        console.log('fdskfj',i++)
+        console.log('fdsss',this.file)
+        uploadFilesApi(this.file)
       }
     },
   }

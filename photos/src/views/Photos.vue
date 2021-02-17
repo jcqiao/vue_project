@@ -41,6 +41,11 @@
         showUploadView:false
       }
     },
+    watch: {
+      showUploadView(newValue, oldValue) {
+        console.log('water:',newValue,oldValue)
+      }
+    },
     created () {
       getPhotos().then(res=>{
         // console.log(res)

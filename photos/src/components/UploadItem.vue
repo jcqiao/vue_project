@@ -4,7 +4,7 @@
       <span class="plan"></span>
       30%
     </span>
-    <img src="public/img/1.jpg" />
+    <img :src="imgSrc" />
     <span class="pictureName">
       home
     </span>
@@ -13,7 +13,23 @@
 
 <script>
   export default {
-    name:"UploadItem"
+    name:"UploadItem",
+    props: ["file"],
+    data() {
+      return {
+        imgSrc: ""
+      }
+    },
+    created () {
+      let fileReader = new FileReader()
+      fileReader.readAsDataURL(this.file)
+      console.log('filereader:',fileReader)
+      fileReader.onload = ()=>{
+        this.imgSrc = fileReader.result
+        // console.log(this.imgSrc)
+
+      }
+    },
   }
 </script>
 

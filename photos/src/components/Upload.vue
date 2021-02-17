@@ -29,7 +29,9 @@
         <!-- 显示待上传图片  -->
         <div class="loadContainer"  v-show="showProgress">
           <div class="wantUpload">
-            <UploadItem></UploadItem>
+            <template v-for="(item,index) in files">
+              <UploadItem  :key="index" :file="item"></UploadItem>
+            </template>
           </div>
           <div class="addStyle">
             <span class="fileinput-add">
@@ -59,9 +61,7 @@
         files: []
       }
     },
-    created () {
-      console.log(this.visible,'-----');
-    },
+
     computed: {
       showUploadBtn() {
         return this.files.length === 0
@@ -79,11 +79,11 @@
         this.files = Array.from(e.target.files)
       }
     },
-// watch: {
-//   visible(newValue, oldValue) {
-//     console.log(newValue,oldValue)
-//   }
-// },
+watch: {
+  visible(newValue, oldValue) {
+    console.log(newValue,oldValue)
+  }
+},
   }
 </script>
 

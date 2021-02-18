@@ -50,6 +50,7 @@
 
 <script>
   import UploadItem from "./UploadItem"
+   import {getPhotos} from "../api/index"
   export default {
     name: 'Upload',
     components: {
@@ -80,7 +81,12 @@
       },
       upload(){
         this.$refs.uploadFiles.forEach(upLoadCom => {
-          upLoadCom.uploadFile()
+          upLoadCom.uploadFile().then(res=>{
+            // console.log('upload res:',res)
+            if (res.code === 0) {
+              getPhotos()
+            }
+          })
         });
       }
     },

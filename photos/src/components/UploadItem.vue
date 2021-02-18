@@ -33,10 +33,7 @@ import {uploadFilesApi} from "../api/index"
     },
     methods: {
       uploadFile() {
-        let i =0
-        console.log('fdskfj',i++)
-        console.log('fdsss',this.file)
-        uploadFilesApi(this.file)
+        return uploadFilesApi(this.file)
       }
     },
   }

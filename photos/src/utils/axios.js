@@ -12,6 +12,7 @@ myAxios.interceptors.response.use(res => {
 
 myAxios.interceptors.request.use(config => {
   const token = store.state.token
+  console.log('拦截',token)
   if (token) {
     config.headers.authorization = "Bearer " + token
   }

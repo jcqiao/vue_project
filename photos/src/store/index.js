@@ -11,15 +11,19 @@ export default new Vuex.Store({
   mutations: {
     loginApi(state, payload) {
       state.token = payload.token;
+      // console.log('store token:',state.token,payload)
       //每次刷新页面token就会被清空
-      localStorage.setItem("token",state.token)
+      localStorage.setItem("token",payload.token)
       console.log(state.token)
     }
   },
   actions: {
     async loginApi ({ commit }, payload) {
       const res = await loginApi(payload)
-      commit('loginApi', res.data);
+      // console.log('action ogin',res)
+      commit('loginApi', {
+        token: res.data.token
+      });
     }
   },
   modules: {}

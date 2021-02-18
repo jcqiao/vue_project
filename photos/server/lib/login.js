@@ -13,16 +13,15 @@ module.exports = async (ctx, next) => {
       code: 0,
       msg: '登录成功',
       data: {
-        token
+        token,
+        uid:res.id
       }
     }
   } else {
     console.log('false')
     ctx.body = {
       code: 1,
-      msg: '用户名密码错误',
-      data: {
-      }
+      msg: '用户名密码错误'
     }
   }
 

@@ -3,15 +3,15 @@ const fs = require('fs')
 const path = require("path");
 
 module.exports = async (ctx, next) => {
-  // console.log('uploadFIles', ctx.request.files)
+  console.log('uploadFIles', ctx.request.files,ctx.request.query)
   const { img } = ctx.request.files
-  // console.log('imgPath', img.path)
+  console.log('imgPath', img.path)
   if (img) {
     console.log(img.name,img.size,img.path,':::')
     const uploadPath = generateUploadPath(img.name);
     saveImgToUpload(img, uploadPath);
-    const sql = `INSERT INTO photos (imgUrl,name,size,type) VALUES  (?,?,?,?)`;
-    const res = await query(sql, [generateToDbUploadPath(uploadPath),img.name, img.size, img.type])
+    const sql = `INSERT INTO photos (imgUrl,name,size,type,uid) VALUES  (?,?,?,?,?)`;
+    const res = await query(sql, [generateToDbUploadPath(uploadPath),img.name, img.size, img.type,ctx.request.query.uid])
     // console.log('dab:',res)
 
     ctx.body = {

@@ -1,7 +1,8 @@
 const { query } = require("./db")
 
 module.exports = async (ctx, next) => {
-  const res = await query("select * from `photos`")
+  console.log('params',ctx.query.uid)
+  const res = await query("select * from `photos` where uid=?",[ctx.query.uid])
   // console.log('photos:', res)
   if (res.length > 0) {
     ctx.body = {

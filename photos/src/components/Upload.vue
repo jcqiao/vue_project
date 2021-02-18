@@ -80,11 +80,13 @@
         this.files = Array.from(e.target.files)
       },
       upload(){
-        this.$refs.uploadFiles.forEach(upLoadCom => {
-          upLoadCom.uploadFile().then(res=>{
+        this.$refs.uploadFiles.forEach( async upLoadCom => {
+          await upLoadCom.uploadFile().then(res=>{
             // console.log('upload res:',res)
             if (res.code === 0) {
               getPhotos()
+              //上传完成
+              this.$emit("upload-completed");
             }
           })
         });

@@ -10,10 +10,8 @@ export function getPhotos () {
   return myAxios.get('/getPhotos')
 }
 
-export function uploadFilesApi(files) {
-  console.log('files', files)
+export function uploadFilesApi (files, { onUploadProgress }) {
   let formData = new FormData()
   formData.append('img', files)
-  console.log('formdata',formData)
-  return myAxios.post("/uploadFiles", formData)
+  return myAxios.post("/uploadFiles", formData, { onUploadProgress })
 }

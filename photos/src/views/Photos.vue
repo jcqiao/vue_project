@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- 上传相关 -->
-    <Upload :visible.sync="showUploadView"></Upload>
+    <Upload :visible.sync="showUploadView" @upload-completed="completed"></Upload>
   </div>
 </template>
 
@@ -47,16 +47,21 @@
       }
     },
     created () {
-      getPhotos().then(res=>{
-        // console.log(res)
-        this.photos = res.data
-        console.log('----',this.photos)
-      });
+      this.getAllPhotos()
     },
     methods: {
       // uploadPhotos() {
       //   this.showUploadView = true
       // }
+      completed(){
+        //上传完成重新请求图片接口
+       this.getAllPhotos()
+      },
+      getAllPhotos(){
+        getPhotos().then(res=>{
+        this.photos = res.data
+      });
+      }
     },
   }
 </script>

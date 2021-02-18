@@ -1,8 +1,8 @@
 <template>
   <div class="uploadPhotoItem">
-    <span class="myProgress">
+    <span class="myProgress" v-show="myProgress">
       <span class="plan"></span>
-      30%
+      {{percent}}%
     </span>
     <img :src="imgSrc" />
     <span class="pictureName">
@@ -18,7 +18,8 @@ import {uploadFilesApi} from "../api/index"
     props: ["file"],
     data() {
       return {
-        imgSrc: ""
+        imgSrc: "",
+        percent:0
       }
     },
     created () {
@@ -27,13 +28,26 @@ import {uploadFilesApi} from "../api/index"
       console.log('filereader:',fileReader)
       fileReader.onload = ()=>{
         this.imgSrc = fileReader.result
-        // console.log(this.imgSrc)
 
+      }
+
+    },
+    computed: {
+      myProgress() {
+        return this.percent > 0 && this.percent <= 100
       }
     },
     methods: {
-      uploadFile() {
-        return uploadFilesApi(this.file)
+      async uploadFile() {
+        const self = this;
+        return uploadFilesApi(this.file,{
+          onUploadProgress(e) {
+            console.log('0-------------0')
+            // 当前已经上传的值  总值
+            self.percent = Math.floor((e.loaded / e.total) * 100);
+            console.log('self.percent:',self.percent)
+          },
+        })
       }
     },
   }

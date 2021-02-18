@@ -1,5 +1,6 @@
 const Koa = require("koa");
-const static = require("koa-static");
+// const static = require("koa-static");
+const staticCache = require("koa-static-cache")
 const koaBody = require("koa-body");
 const Router = require("koa-router");
 
@@ -13,9 +14,16 @@ app.use(
     multipart: true
   })
 );
-app.use(static(__dirname + "/static"));
+// app.use(static(__dirname + "/static"));
+app.use(staticCache({
+  prefix: "/",
+  dir: __dirname + "/static",
+  gzip: true,
+  dynamic: true
+}))
 
 const router = new Router();
+
 
 router.post("/login",login);
 

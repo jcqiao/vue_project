@@ -40,7 +40,7 @@ function createImgName (name) {
 
 function saveImgToUpload (img, uploadPath) {
   const readStream = fs.createReadStream(img.path);
-  console.log('readStream:',readStream)
+  // console.log('readStream:',readStream)
   const savePath = path.join(__dirname, "../static", uploadPath);
   const writeStream = fs.createWriteStream(savePath);
   readStream.pipe(writeStream);

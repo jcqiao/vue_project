@@ -10,6 +10,15 @@
           <button class="mybtn" @click="showUploadView = true">上传照片</button>
         </div>
       </div>
+     <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="page"
+        @prev-click="handlePrevClick"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        @next-click="handleNextClick">
+      </el-pagination>
 
        <div class="photoContainer">
         <template v-for="item in photos">
@@ -30,6 +39,8 @@
 <script>
   import {getPhotos} from "../api/index"
   import Upload from "../components/Upload"
+  // import router from "../router"
+  // import store from "../store"
   export default {
     name: 'Photos',
     components: {
@@ -38,7 +49,14 @@
     data() {
       return {
         photos: [],
-        showUploadView:false
+        showUploadView:false,
+        pageInfo:{},
+        currentPage:1
+      }
+    },
+    computed: {
+      page() {
+        return Math.ceil(this.pageInfo.total/this.pageInfo.prepage *10 )
       }
     },
     watch: {
@@ -57,10 +75,30 @@
         //上传完成重新请求图片接口
        this.getAllPhotos()
       },
-      getAllPhotos(){
-        getPhotos().then(res=>{
-        this.photos = res.data
+      getAllPhotos(page){
+        getPhotos(page).then(res=>{
+          console.log('all:::',res)
+        this.photos = res.data.res
+        this.pageInfo = res.data.pageInfo
+        console.log('pageInfor',this.pageInfo)
       });
+      },
+      handlePrevClick(){
+        console.log('handlePrevClick',this.currentPage)
+       this.getAllPhotos(this.currentPage)
+      },
+      handleNextClick(){
+        console.log('handleNextClick',this.currentPage)
+       this.getAllPhotos(this.currentPage)
+      },
+      handleSizeChange(){
+        console.log('handleSizeChange')
+      },
+      handleCurrentChange(currentPage){
+        console.log('handleCurrentChange')
+        this.currentPage = currentPage;
+        console.log(this.currentPage)
+        this.getAllPhotos(this.currentPage)
       }
     },
   }

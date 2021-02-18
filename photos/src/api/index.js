@@ -6,11 +6,12 @@ export function loginApi ({ username, password }) {
   return myAxios.post('/login', { username, password })
 }
 
-export function getPhotos () {
+export function getPhotos (page=1) {
   // console.log('get photos')
   return myAxios.get('/getPhotos', {
     params: {
-      uid: store.state.uid
+      uid: store.state.uid,
+      page
     }
   })
 }
